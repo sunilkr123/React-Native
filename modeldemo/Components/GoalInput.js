@@ -1,5 +1,5 @@
 
-import { View, Button, TextInput, StyleSheet, Modal, Image, StatusBar } from "react-native";
+import { View, Button, TextInput, StyleSheet, Modal, Image, StatusBar, Alert } from "react-native";
 import { useState } from "react";
 
 function GoalInput(props) {
@@ -11,7 +11,11 @@ function GoalInput(props) {
       }
 
       function InputHandler(){
-        props.inputHandler(enteredGoalText);
+        if (enteredGoalText.length > 1) {
+          props.inputHandler(enteredGoalText);
+        } else {
+          Alert.alert('Blank Goal', 'Please enter your goal the blank goal can not be added')
+        }
       }
   
       // function endModelView(){
@@ -20,11 +24,17 @@ function GoalInput(props) {
       // }
 
     return (
-        < Modal visible = {props.visible} animationType="slide">
+        < Modal visible = {props.visible} 
+        animationType="slide"
+        presentationStyle="formSheet"
+        >
           <>
           <StatusBar style={'Light'}/>
           <View style={styles.inAppContainer}>
-          <Image style={styles.image} source={require('../assets/images/goal.png')}/>
+          <Image style={styles.image} 
+          source={require('../assets/images/goal.png')
+            
+          }/>
           <TextInput
            placeholder='Your course goal' 
           style={styles.inputText} 

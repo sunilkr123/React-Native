@@ -1,4 +1,4 @@
-import { FlatList, View, StyleSheet, TextInput, Button, ScrollView } from 'react-native';
+import { FlatList, View, StyleSheet, TextInput, Button, ScrollView, Alert } from 'react-native';
 import { useState } from 'react';
 import GoalItem from './Components/GoalItem';
 import GoalInput from './Components/GoalInput'
@@ -26,10 +26,21 @@ export default function App() {
 
   function deleteItem(id) {
     console.log('item haved presed to delete {id}', id)
-    setCourseGoal( (currentGoal) => {
-      return currentGoal.filter((goal) => goal.id != id)
-    }
-    )
+    Alert.alert("Delete goal item", "Do you really want to delete this goal", [
+      {
+        text: "Cancel",
+        onPress:()=> endAddGoalHandler
+      },
+      {
+        text: "Yes",
+        onPress: () => {
+          setCourseGoal( (currentGoal) => {
+            return currentGoal.filter((goal) => goal.id != id)
+          }
+          )
+        }
+      }
+    ])
   }
 
   return (
@@ -71,7 +82,6 @@ paddingHorizontal: 20,
 paddingTop: 70,
 flex: 1,
   },
-
   goalContainer: {
   flex: 6,
   }
