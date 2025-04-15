@@ -1,35 +1,36 @@
 import { FlatList, View, StyleSheet, TextInput, Button, ScrollView } from 'react-native';
 import { useState } from 'react';
 import GoalItem from './Components/GoalItem';
+import GoalInput from './Components/GoalInput'
 
 export default function App() {
-const [enteredGoalText, setEnteredGoalText] = useState('');
-const [courseGoals, setCourseGoal] = useState([]);
+  const [courseGoals, setCourseGoal] = useState([]);
 
-  function goalInputHandler(enteredGoal) {
-    console.log(`enteredGoal goal is ${enteredGoal}`)
-    setEnteredGoalText(enteredGoal)
-  }
-
-  function addGoalHandler() {
+  function addGoalHandler(enteredGoalText) {
     setCourseGoal((currentGoal) => [...currentGoal, {text: enteredGoalText, id: Math.random().toString()}])
     console.log(`courseGoals is ${courseGoals}`)
   }
 
+  function deleteItem(id) {
+    console.log('item haved presed to delete {id}', id)
+    setCourseGoal( (currentGoal) => {
+      return currentGoal.filter((goal) => goal.id != id)
+    }
+    )
+  }
+
   return (
     <View style={styles.container}>
-     <View style={styles.inAppContainer}>
-      <TextInput placeholder='Your course goal' style={styles.inputText} onChangeText={goalInputHandler}/>
-      <Button title='Add goal' onPress={addGoalHandler}/>
-     </View>
+    <GoalInput inputHandler={addGoalHandler}/>
+
      <View style={styles.goalContainer}>
      <FlatList data={courseGoals}
      renderItem={
     (item) => {
-      console.log(`logs are ${item.item.text}`)
-      console.log(`item.item.id logs are ${item.item.id}`)
       return (
-        <GoalItem text={item.item.text}/>
+        <GoalItem text={item.item.text} 
+        id={item.item.id}
+        deleteGoalItem={deleteItem}/>
       );
       }
      }
@@ -48,30 +49,11 @@ const [courseGoals, setCourseGoal] = useState([]);
 
 const styles = StyleSheet.create({
   container: {
-paddingHorizontal: 20,
-paddingTop: 70,
-flex: 1,
-  },
-  inAppContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
-    flex: 1,
-  },
-  inputText: {
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    width: '75%',
-    padding: 10,
-    marginRight: 8,
+  paddingHorizontal: 20,
+  paddingTop: 70,
+  flex: 1,
   },
   goalContainer: {
   flex: 6,
-  },
-  goalText:{
-    color: 'white'
   }
 });
