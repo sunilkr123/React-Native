@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "mini-game-app",
-    "slug": "mini-game-app",
+    "name": "meal-mobile-app",
+    "slug": "meal-mobile-app",
     "version": "1.0.0",
-    "orientation": "default",
+    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
@@ -23,9 +23,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-font"
-    ]
+    }
   }
 }
